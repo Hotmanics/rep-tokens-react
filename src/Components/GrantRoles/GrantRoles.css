@@ -1,0 +1,25 @@
+.grantMinterRole {
+    background-color: #36486b;
+    padding: 1rem;
+    width: 50rem;
+    max-width: 95%;
+    border-radius: 12px;
+    text-align: center; 
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    margin-top: 1rem;
+    margin-left: 5rem;
+  }
+
+  .grantMinterRole p {
+    font-size: 18px;
+    display: inline;
+  }
+  
+  button {
+    display: inline;
+  }
+
+  .buttons {
+    display:flex;
+ }

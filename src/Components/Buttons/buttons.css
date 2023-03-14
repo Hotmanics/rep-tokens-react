@@ -1,0 +1,27 @@
+button {
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border: 1px solid #40005d;
+    background-color: #618685;
+    color: white;
+    border-radius: 12px;
+    margin-right: 1rem;
+    display: inline;
+  }
+  
+  button:hover,
+  button:active {
+    background-color: #510674;
+    border-color: #510674;
+  }
+  
+  button.alternative {
+    color: #220131; 
+    border-color: transparent;
+    background-color: transparent;
+  }
+  
+  button.alternative:hover,
+  button.alternative:active {
+    background-color: #ddb3f8;
+  }
