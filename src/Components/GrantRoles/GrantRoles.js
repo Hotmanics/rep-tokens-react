@@ -1,12 +1,23 @@
-import Web3Modal from "web3modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { ethers } from "ethers"
 import React, { useState } from 'react';
 import "./GrantRoles.css";
 import { abi } from "../../abi";
+import CenteredCard from "../Cards/Centered Card/CenteredCard";
 
 const GrantRoles = (props)=> {
+
+    const [toText, setToText] = useState('');
+    const [selectedRole, setSelectedRole] = useState('distributor');
+
+    const handleOnSelectedRole = (event) => {
+        setSelectedRole(event.target.value);
+    }
+
+    const handleOnToChanged = async (event)=> {
+        setToText(event.target.value);
+
+        console.log(await contract.MINTER_ROLE())
+    }
 
     const address = "0x348E826A4D16444673A40074F52bb1590706d9a0";
     const contract = new ethers.Contract(
@@ -17,13 +28,28 @@ const GrantRoles = (props)=> {
 
     const grantRole = async (roleInBytes)=> {
         try{
-            let tx = await contract.roleGranter_DELETEFORMAINNET(roleInBytes);
-            props.onBoastMessage("granting role " + roleInBytes + "...");
+            let tx = await contract.grantRole(roleInBytes, toText);
+            props.onBoastMessage("granting role " + roleInBytes + " to " + toText + "...");
             await tx.wait();
             props.onBoastMessage("granted role " + roleInBytes + "!");
         } catch (e) {
             props.onBoastMessage(e.reason);
         }
+    }
+
+    const grantTheRole = async ()=> {
+        console.log(selectedRole);
+
+        if (selectedRole === 'minter') {
+            console.log("beh");
+            await grantMinterRole();
+        }
+        if (selectedRole === 'distributor')
+            await grantDistributorRole();
+        if (selectedRole === 'burner')
+            await grantBurnerRole();
+        if (selectedRole === 'Soulbound Token Transferer')
+            await grantSoulboundTokenTransfererRole();
     }
 
     const grantBurnerRole = async ()=> {
@@ -38,7 +64,7 @@ const GrantRoles = (props)=> {
         await grantRole(await contract.MINTER_ROLE());
     }
 
-    const grantSoulboundTokenTransferer = async ()=> {
+    const grantSoulboundTokenTransfererRole = async ()=> {
         await grantRole(await contract.SOULBOUND_TOKEN_TRANSFERER_ROLE());
     }
 
@@ -54,17 +80,20 @@ const GrantRoles = (props)=> {
         }
     }
 
-    return <div className="grantMinterRole">
-        <p>Role Granting</p>
-        <div className ="buttons">
+    return <CenteredCard className="grantMinterRole" title="Grant Roles">
 
-        <button onClick={grantMinterRole}>Minter</button>
-        <button onClick={grantDistributorRole}>Distributor</button>
-        <button onClick={grantBurnerRole}>Burner</button>
-        <button onClick={grantSoulboundTokenTransferer}>Soulbound Token Transferer</button>
-        <button onClick={()=> { mint(props.connectedWalletInfo.account, 50) }}>mint</button>
-        </div>
-        </div>
+        <p>Recipient</p>
+        <input type="text" onChange={handleOnToChanged}/>
+        <div id="aye"><select onChange={handleOnSelectedRole} >  
+        <option> distributor </option>  
+            <option> minter </option>  
+            <option> burner </option>  
+            <option> admin </option>  
+            <option> Soulbound Token Transferer </option>  
+        </select>  </div>
+
+        <button onClick={grantTheRole}>Grant Role</button>
+        </CenteredCard>
 }
 
 export default GrantRoles;

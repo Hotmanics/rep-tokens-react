@@ -5,8 +5,6 @@ button {
     background-color: #618685;
     color: white;
     border-radius: 12px;
-    margin-right: 1rem;
-    display: inline;
   }
   
   button:hover,

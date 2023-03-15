@@ -4,6 +4,7 @@ import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { ethers } from "ethers"
 import React, { useState } from 'react';
 import "./ConnectWallet.css";
+import LeftCard from "../Cards/Left Card/LeftCard";
 
 const providerOptions = {
     walletconnect: {
@@ -43,19 +44,25 @@ const ConnectWallet = (props)=> {
         //keep for dev purposes - if not present then app will remember Metamask and not display the modal
         web3Modal.clearCachedProvider()
     
-        const provider = await web3Modal.connect();
-        const etherProvider = new ethers.providers.Web3Provider(provider);
-    
-        await etherProvider.send("eth_requestAccounts");
-        const accounts = await etherProvider.listAccounts();
+        try{
 
-        const connectedWalletInfo = {
-          account: accounts[0],
-          provider: etherProvider.getSigner(),
+            const provider = await web3Modal.connect();
+            const etherProvider = new ethers.providers.Web3Provider(provider);
+        
+            await etherProvider.send("eth_requestAccounts");
+            const accounts = await etherProvider.listAccounts();
+  
+            const connectedWalletInfo = {
+              account: accounts[0],
+              provider: etherProvider.getSigner(),
+          }
+  
+          props.onWalletConnected(connectedWalletInfo);
+          setConnectedWalletInfo(connectedWalletInfo);
+        } catch (e) {
+          props.boastMessage(e.reason);
         }
 
-        props.onWalletConnected(connectedWalletInfo);
-        setConnectedWalletInfo(connectedWalletInfo);
     };
 
     let buttonSection = connectedWalletInfo.account === undefined ? 

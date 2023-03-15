@@ -1,8 +1,8 @@
-  .grantMinterRole p {
+  .minting p {
     font-size: 18px;
   }
-
-  .grantMinterRole button {
+  
+  .minting button {
     justify-self:center;
     text-align: center; 
     white-space: pre-line;
@@ -12,6 +12,10 @@
     margin-top: 10px;
   }
 
-  #aye {
-    margin-top: 10px;
+  /* button {
+    display: inline;
   }
+
+  .buttons {
+    display:flex;
+ } */

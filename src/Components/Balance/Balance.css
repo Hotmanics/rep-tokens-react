@@ -1,0 +1,9 @@
+img {
+    width:200px;
+    height:200px;
+}
+
+.token {
+    display:inline-block;
+    margin:10px;
+}

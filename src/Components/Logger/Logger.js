@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import CenteredCard from '../Cards/Centered Card/CenteredCard';
 import "./Logger.css";
 
 const Logger = (props)=> {
 
-    let msg = props.boastMessage === '' ? "Logz" : props.boastMessage;
+    let msg = props.boastMessage === '' ? "" : props.boastMessage;
 
-    return <div className="logger">
+    return <CenteredCard className="logger">
         <p>{msg}</p>
-        </div>
+        </CenteredCard>
 }
 
 export default Logger;

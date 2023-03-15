@@ -1,8 +1,8 @@
-  .grantMinterRole p {
+  .distributing p {
     font-size: 18px;
   }
 
-  .grantMinterRole button {
+  .distributing button {
     justify-self:center;
     text-align: center; 
     white-space: pre-line;
@@ -12,6 +12,8 @@
     margin-top: 10px;
   }
 
-  #aye {
-    margin-top: 10px;
-  }
+  /* 
+
+  .buttons {
+    display:flex;
+ } */
