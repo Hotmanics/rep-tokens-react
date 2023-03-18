@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Distributing from "../Distributing/Distributing";
 import Minting from "../Minting/Minting";
 import Balance from "../Balance/Balance";
+import SXSW from "../SXSW/SXSW";
 
 const LoggedInSection = (props)=> {
 
@@ -17,7 +18,7 @@ const LoggedInSection = (props)=> {
 
 
 
-    const [output, setOutput] = useState(<Balance onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></Balance>);
+    const [output, setOutput] = useState(<SXSW onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></SXSW>);
 
     const handleStateSet = (state)=> {
 
@@ -36,6 +37,8 @@ const LoggedInSection = (props)=> {
             });
         } else if (state === 'balance') {
             setOutput(<Balance onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></Balance>);
+        } else if (state === 'SXSW') {
+            setOutput(<SXSW onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></SXSW>);
         }
     }
 

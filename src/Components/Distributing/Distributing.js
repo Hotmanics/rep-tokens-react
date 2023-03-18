@@ -1,20 +1,20 @@
 import "./Distributing.css";
 import { ethers } from "ethers"
 import React, { useState } from 'react';
-import { abi } from "../../abi";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
+import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
 
 const Distributing = (props)=> {
-    const address = "0x348E826A4D16444673A40074F52bb1590706d9a0";
+    const address = repTokenAddress;
     const contract = new ethers.Contract(
         address,
-        abi,
+        repTokensABI,
         props.connectedWalletInfo.provider
     );
 
     const distribute = async (from, to, amount)=> {
         try{
-            let tx = await contract.transferFromDistributor(from, to, amount, []);
+            let tx = await contract.distribute(from, to, amount, []);
             
             props.onBoastMessage("distributing tokens to " + to + "...");
             await tx.wait();

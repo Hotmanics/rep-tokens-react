@@ -16,7 +16,7 @@ const NavBar = (props)=> {
         </button>
 
         <button onClick={()=> {handleClick('balance')}}>
-            Balance
+            Account
         </button>
 
         <button onClick={()=> {handleClick('mint')}}>
@@ -30,6 +30,10 @@ const NavBar = (props)=> {
         <button onClick={()=> {handleClick('roleGrant')}}>
             Admin
         </button>
+
+        {/* <button onClick={()=> {handleClick('SXSW')}}>
+            SXSW
+        </button> */}
     </CenteredCard>
 }
 

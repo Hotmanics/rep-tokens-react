@@ -1,0 +1,21 @@
+.minting p {
+    font-size: 18px;
+  }
+  
+  .minting button {
+    justify-self:center;
+    text-align: center; 
+    white-space: pre-line;
+  } 
+
+  button {
+    margin-top: 10px;
+  }
+
+  /* button {
+    display: inline;
+  }
+
+  .buttons {
+    display:flex;
+ } */

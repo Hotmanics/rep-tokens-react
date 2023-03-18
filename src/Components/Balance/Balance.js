@@ -1,8 +1,8 @@
 import "./Balance.css";
 import { ethers } from "ethers"
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
-import { abi } from "../../abi";
 import React, {useState} from 'react';
+import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
 
 const Balance = (props)=> {
 
@@ -15,10 +15,18 @@ const Balance = (props)=> {
     const [soulboundImage, setSoulboundImage] = useState('');
     const [redeemableImage, setRedeemableImage] = useState('');
 
-    const address = "0x348E826A4D16444673A40074F52bb1590706d9a0";
+    const [destinationWallet, setDestinationWallet] = useState('');
+
+    const [toText, setToText] = useState('');
+
+    const handleOnToChanged = (event)=> {
+        setToText(event.target.value);
+    }
+
+    const address = repTokenAddress;
     const contract = new ethers.Contract(
         address,
-        abi,
+        repTokensABI,
         props.connectedWalletInfo.provider
     );
 
@@ -40,6 +48,29 @@ const Balance = (props)=> {
         setRedeemableName(redeemableJson.name);
         redeemableJson.image = redeemableJson.image.replace("ipfs://", "https://ipfs.io/ipfs/");
         setRedeemableImage(redeemableJson.image);
+
+        let destinationWallet = await contract.destinationWallets(props.connectedWalletInfo.account);
+        
+        if ("0x0000000000000000000000000000000000000000" === destinationWallet) {
+            setDestinationWallet("The Destination Wallet is the same as the currently connected wallet");
+        }
+        else {
+            setDestinationWallet(destinationWallet);
+        }
+    }
+
+    const setUserDestination = async ()=> {
+        try{
+            let tx = await contract.setDestinationWallet(toText);
+            
+            props.onBoastMessage("setting destination wallet to " + toText + "...");
+            await tx.wait();
+            props.onBoastMessage("set destination wallet to " + toText + "!");
+        } catch(e) {
+            props.onBoastMessage(e.reason);
+        }
+
+        setDestinationWallet(toText);
     }
 
     const getJson = async(uri)=> {
@@ -54,7 +85,7 @@ const Balance = (props)=> {
 
     getBalance();
 
-    return <CenteredCard className="Balance" title="Balance">
+    return <CenteredCard className="Balance" title="Account">
         <div className="token">
             <p>{soulboundName}</p>
             <p>{soulboundBalance}</p>
@@ -64,6 +95,17 @@ const Balance = (props)=> {
             <p>{redeemableName}</p>
             <p>{redeemableBalance}</p>
             <img src={redeemableImage}></img>
+        </div>
+
+        <div>
+            <p>Current Destination Wallet</p>
+            <p>{destinationWallet}</p>
+
+            <p>New Destination Wallet</p>
+            <input type="text" onChange={handleOnToChanged}/>
+            <div>
+            <button onClick={setUserDestination}>Set</button>
+            </div>
         </div>
     </CenteredCard>
 }

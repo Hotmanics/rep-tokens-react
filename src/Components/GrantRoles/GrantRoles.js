@@ -1,9 +1,8 @@
 import { ethers } from "ethers"
 import React, { useState } from 'react';
 import "./GrantRoles.css";
-import { abi } from "../../abi";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
-
+import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
 const GrantRoles = (props)=> {
 
     const [toText, setToText] = useState('');
@@ -19,10 +18,10 @@ const GrantRoles = (props)=> {
         console.log(await contract.MINTER_ROLE())
     }
 
-    const address = "0x348E826A4D16444673A40074F52bb1590706d9a0";
+    const address = repTokenAddress;
     const contract = new ethers.Contract(
         address,
-        abi,
+        repTokensABI,
         props.connectedWalletInfo.provider
     );
 

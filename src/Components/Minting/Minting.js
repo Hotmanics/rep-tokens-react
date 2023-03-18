@@ -1,9 +1,8 @@
 import "./Minting.css";
 import { ethers } from "ethers"
 import React, { useState } from 'react';
-import { abi } from "../../abi";
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
-
+import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
 const Minting = (props)=> {
     const [toText, setToText] = useState('');
     const [amount, setAmount] = useState('');
@@ -16,10 +15,10 @@ const Minting = (props)=> {
         setAmount(event.target.value);
     }
  
-    const address = "0x348E826A4D16444673A40074F52bb1590706d9a0";
+    const address = repTokenAddress;
     const contract = new ethers.Contract(
         address,
-        abi,
+        repTokensABI,
         props.connectedWalletInfo.provider
     );
 
