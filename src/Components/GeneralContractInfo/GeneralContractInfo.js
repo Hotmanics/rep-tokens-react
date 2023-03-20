@@ -82,17 +82,20 @@ const GeneralContractInfo = (props)=> {
 
     return <CenteredCard title="Contract Info">
         <p>Max Mint Amount Per Tx: {maxMintAmount}</p>
-        <p>Holders</p>
+        <p>-------------------------------------------</p>
         <p>Soulbound Tokens</p>
+        <p>------</p>
         {
             assets.soulboundAssets.map((data, index) => (
-                <div key={Math.random()}>{data.owner} owns {data.amount}</div>
+                <p key={Math.random()}>{data.owner} owns {data.amount}</p>
             ))
         }
         <p>Redeemable Tokens</p>
+        <p>------</p>
+
         {
             assets.redeemableAssets.map((data, index) => (
-                <div key={Math.random()}>{data.owner} owns {data.amount}</div>
+                <p key={Math.random()}>{data.owner} owns {data.amount}</p>
             ))
         }
         </CenteredCard>

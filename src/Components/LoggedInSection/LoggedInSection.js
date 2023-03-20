@@ -18,7 +18,7 @@ const LoggedInSection = (props)=> {
 
 
 
-    const [output, setOutput] = useState(<SXSW onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></SXSW>);
+    const [output, setOutput] = useState(<Balance onBoastMessage={handleLogger} connectedWalletInfo={props.connectedWalletInfo}></Balance>);
 
     const handleStateSet = (state)=> {
 

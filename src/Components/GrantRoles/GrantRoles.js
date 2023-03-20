@@ -64,7 +64,7 @@ const GrantRoles = (props)=> {
     }
 
     const grantSoulboundTokenTransfererRole = async ()=> {
-        await grantRole(await contract.SOULBOUND_TOKEN_TRANSFERER_ROLE());
+        await grantRole(await contract.TOKEN_MIGRATOR_ROLE());
     }
 
     const mint = async (to, amount)=> {
@@ -80,7 +80,6 @@ const GrantRoles = (props)=> {
     }
 
     return <CenteredCard className="grantMinterRole" title="Grant Roles">
-
         <p>Recipient</p>
         <input type="text" onChange={handleOnToChanged}/>
         <div id="aye"><select onChange={handleOnSelectedRole} >  
@@ -88,7 +87,7 @@ const GrantRoles = (props)=> {
             <option> minter </option>  
             <option> burner </option>  
             <option> admin </option>  
-            <option> Soulbound Token Transferer </option>  
+            <option> token migrator </option>  
         </select>  </div>
 
         <button onClick={grantTheRole}>Grant Role</button>
