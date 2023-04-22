@@ -1,11 +1,16 @@
 import "./App.css";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Components/Buttons/buttons.css";
 import ConnectWallet from "./Components/ConnectWallet/ConnectWallet";
 import Logger from "./Components/Logger/Logger";
 import LoggedInSection from "./Components/LoggedInSection/LoggedInSection";
 
 function App() {
+
+  useEffect(() => {
+    document.title = "ATX DAO Rep"
+    }, []);
+
 
   const [connectedWalletInfo, setConnectedWalletInfo] = useState('');
   const [message, setMessage] = useState('');

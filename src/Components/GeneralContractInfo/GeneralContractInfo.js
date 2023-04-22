@@ -7,8 +7,19 @@ import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
 const GeneralContractInfo = (props)=> {
 
 
+    useEffect(()=> {
+        if (props.onContractPageSet) {
+            test();
+        }
 
-    const [maxMintAmount, setMaxMintAmount] = useState(0);
+        async function test() {
+            await getAllHolders();  
+            await getMaxMintAmountPerTx();
+    
+        }
+    }, [props.onContractPageSet]);
+
+    const [maxMintAmount, setMaxMintAmount] = useState();
     const [assets, setAssets] = useState({});
 
     const address = repTokenAddress;
@@ -18,16 +29,7 @@ const GeneralContractInfo = (props)=> {
         props.connectedWalletInfo.provider
     );
 
-    useEffect(()=> {
-        if (props.onContractPageSet) {
-          getAllHolders();  
-        getMaxMintAmountPerTx();
-
-        }
-    }, [props.onContractPageSet]);
-
     const getMaxMintAmountPerTx = async ()=> {
-        setIsLoadingMax(true);
         try {
             let x = await contract.maxMintAmountPerTx();
             setMaxMintAmount(x.toNumber());
@@ -35,28 +37,18 @@ const GeneralContractInfo = (props)=> {
         } catch (e) {
 
         }
-        setIsLoadingMax(false);
     }
-
-    const [isLoadingMax, setIsLoadingMax] = useState(false);
-    const [isGettingLifetimeTokens, setIsGettingLifetimeTokens] = useState(false);
-    const [isGettingRedeemableTokens, setIsGettingRedeemableTokens] = useState(false);
-    const [lifetimeHolderCount, setLifetimeHolderCount] = useState(0);
-    const [redeemableHolderCount, setRedeemableHolderCount] = useState(0);
 
     const getAllHolders = async ()=> {
 
-        setIsGettingLifetimeTokens(true);
         const soulboundAssets = [];
 
         try {
             let soulboundOwners = await contract.getOwnersOfTokenID(0);
-            console.log(soulboundOwners);
 
-            setLifetimeHolderCount(soulboundOwners.length);
             
             for (let j = 0; j < soulboundOwners.length; j++) {
-                let amount = await contract.balanceOf(soulboundOwners[j], 0);
+                let amount = await contract.balanceOf(soulboundOwners[j], 0); //Sometimes errors out here. Sometimes does not error out.
                 soulboundAssets.push({
                     owner: soulboundOwners[j],
                     amount: amount.toNumber()
@@ -67,17 +59,10 @@ const GeneralContractInfo = (props)=> {
                 console.log("errored on " + e.method);
             }
         }
-        setIsGettingLifetimeTokens(false);
 
-        // assets.soulboundAssets = soulboundAssets;
-
-
-        setIsGettingRedeemableTokens(true);
         const redeemableAssets = [];
         try {
             let redeemableOwners = await contract.getOwnersOfTokenID(1);
-            console.log(redeemableOwners);
-            setRedeemableHolderCount(redeemableOwners.length);
 
             for (let j = 0; j < redeemableOwners.length; j++) {
                 let amount = await contract.balanceOf(redeemableOwners[j], 1);
@@ -91,9 +76,6 @@ const GeneralContractInfo = (props)=> {
                 console.log("errored on " + e.method);
             }
         }
-        setIsGettingRedeemableTokens(false);
-
-        // assets.redeemableAssets = redeemableAssets;
         
         const assets = {
             soulboundAssets: soulboundAssets,
@@ -104,48 +86,25 @@ const GeneralContractInfo = (props)=> {
         setAssets(assets);
     }
 
+    let lifetime = <div><p>Loading Lifetime Token Owners...</p></div>;
 
-    // getAllHolders();
-
-    // let output;
-    // if (assets.soulboundAssets !== undefined) {
-    //     output = assets.soulboundAssets.length === 0 ? <p>There are no assets!</p> : assets.soulboundAssets.map((data, index) => (
-    //         <div key={Math.random()}>{data.owner} owns {data.amount}</div>
-    //     ));
-    // }
-
-    if (assets.soulboundAssets === undefined) {
-        return <CenteredCard title="Contract Info">
-        <p>Max Mint Amount Per Tx: {maxMintAmount}</p>
-        </CenteredCard>
-    }
-
-    let lifetime;
-    if (isGettingLifetimeTokens) {
-        lifetime = <div><p>Loading Lifetime Token Owners...</p></div>
-    } else {
-        lifetime = <div><p>Lifetime Tokens</p>
-        <p>Number Of Holders: {assets.soulboundAssets.length}</p>
-        <p>------</p>
-        {
-            assets.soulboundAssets.map((data, index) => (
-                <p key={Math.random()}>{data.owner} owns {data.amount}</p>
-            ))
-        }
+    if (assets.soulboundAssets !== undefined) {
+        lifetime = <div>
+            <h2>Lifetime Tokens</h2>
+            <p>Number Of Holders: {assets.soulboundAssets.length}</p>
+            {
+                assets.soulboundAssets.map((data, index) => (
+                    <p key={Math.random()}>{data.owner} owns {data.amount}</p>
+                ))
+            }
         </div>
     }
 
-    let redeemable;
-    if (isGettingRedeemableTokens) {
+    let redeemable = <div><p>Loading Redeemable Token Owners...</p></div>;
+    if (assets.redeemableAssets !== undefined) {
         redeemable = <div>
-            <p>Loading Redeemable Token Owners...</p>
-        </div>
-    } else {
-        redeemable = <div>
-            <p>Redeemable Tokens</p>
+            <h2>Redeemable Tokens</h2>
             <p>Number Of Holders: {assets.redeemableAssets.length}</p>
-            <p>------</p>
-
             {
                 assets.redeemableAssets.map((data, index) => (
                     <p key={Math.random()}>{data.owner} owns {data.amount}</p>
@@ -154,12 +113,9 @@ const GeneralContractInfo = (props)=> {
         </div>
     }
 
-    let maxMint;
-    if (isLoadingMax) {
-        maxMint = <div>
-            <p>Loading Max Mint...</p>
-        </div>
-    } else {
+    let maxMint = <div><p>Loading Max Mint...</p></div>;
+
+    if (maxMintAmount !== undefined) {
         maxMint = <div>
             <p>Max Mint Amount Per Tx: {maxMintAmount}</p>
         </div>
@@ -168,30 +124,15 @@ const GeneralContractInfo = (props)=> {
     return <CenteredCard title="Contract Info">
         <p>Contract Address: { address }</p>
         { maxMint }
-        {/* <p>Max Mint Amount Per Tx: {maxMintAmount}</p> */}
         <p>-------------------------------------------</p>
         {
             lifetime
         }
+        <p>------</p>
         {
             redeemable
         }
 
-        {/* <p>Lifetime Tokens</p>
-        <p>------</p>
-        {
-            assets.soulboundAssets.map((data, index) => (
-                <p key={Math.random()}>{data.owner} owns {data.amount}</p>
-            ))
-        }
-        <p>Redeemable Tokens</p>
-        <p>------</p>
-
-        {
-            assets.redeemableAssets.map((data, index) => (
-                <p key={Math.random()}>{data.owner} owns {data.amount}</p>
-            ))
-        } */}
         </CenteredCard>
 }
 
