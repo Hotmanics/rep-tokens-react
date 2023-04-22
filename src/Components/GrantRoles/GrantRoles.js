@@ -79,6 +79,23 @@ const GrantRoles = (props)=> {
         }
     }
 
+    const [maxMint, setMaxMint] = useState(0);
+    const handleMaxMint = (event)=> {
+        setMaxMint(event.target.value);
+    }
+
+    const setMax = async ()=> {
+        try{
+            let tx = await contract.setMaxMintAmount(maxMint);
+            
+            props.onBoastMessage('setting max mint to ' + maxMint + "...");
+            await tx.wait();
+            props.onBoastMessage(`set max mint to ${maxMint}!`);
+        } catch(e) {
+            props.onBoastMessage(e.reason);
+        }
+    }
+
     return <CenteredCard className="grantMinterRole" title="Grant Roles">
         <p>Recipient</p>
         <input type="text" onChange={handleOnToChanged}/>
@@ -91,6 +108,15 @@ const GrantRoles = (props)=> {
         </select>  </div>
 
         <button onClick={grantTheRole}>Grant Role</button>
+
+        <div>
+            <p>Max Mint Amount</p>
+            <input type="number" onChange={handleMaxMint}/>
+            <div>
+                <button onClick={setMax}>Set Max</button>
+            </div> 
+        </div>
+
         </CenteredCard>
 }
 

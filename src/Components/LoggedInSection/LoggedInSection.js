@@ -7,6 +7,7 @@ import Distributing from "../Distributing/Distributing";
 import Minting from "../Minting/Minting";
 import Balance from "../Balance/Balance";
 import SXSW from "../SXSW/SXSW";
+import RolesReader from "../Role Readers/RolesReader";
 
 const LoggedInSection = (props)=> {
 
@@ -43,6 +44,7 @@ const LoggedInSection = (props)=> {
     }
 
     return <div className="LoggedInSection">
+        <RolesReader connectedWalletInfo={props.connectedWalletInfo}></RolesReader>
     <NavBar onStateSet={handleStateSet}></NavBar>
     { output }
     </div>

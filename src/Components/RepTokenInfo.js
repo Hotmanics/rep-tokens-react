@@ -1,4 +1,4 @@
-const repTokenAddress = "0xED0F22193Da33b7285eD4c2bAe39910ced988B1e";
+const repTokenAddress = "0x13B47F92db4c20123624253f5c9Da63D10705FD6";
 const { abi } = require("../RepTokensABI.js");
 
 module.exports = { repTokenAddress, repTokensABI: abi };

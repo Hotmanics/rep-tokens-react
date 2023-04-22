@@ -4,7 +4,6 @@ import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { ethers } from "ethers"
 import React, { useState } from 'react';
 import "./ConnectWallet.css";
-import LeftCard from "../Cards/Left Card/LeftCard";
 
 const providerOptions = {
     walletconnect: {
@@ -51,7 +50,7 @@ const ConnectWallet = (props)=> {
         
             await etherProvider.send("eth_requestAccounts");
             const accounts = await etherProvider.listAccounts();
-  
+          
             const connectedWalletInfo = {
               account: accounts[0],
               provider: etherProvider.getSigner(),
@@ -74,6 +73,8 @@ const ConnectWallet = (props)=> {
     const accountInfo = connectedWalletInfo.account === undefined ? <p>Please login.</p>
                         : <p>You are logged in as: { connectedWalletInfo.account }</p>
     return <div className="connectWallet">
+      <p>Please ensure that you are connected to polygon mainnet!</p>
+      <br/>
         { buttonSection } 
         { accountInfo }
         </div>

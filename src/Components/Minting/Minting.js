@@ -22,7 +22,6 @@ const Minting = (props)=> {
         props.connectedWalletInfo.provider
     );
 
-
     const mint = async (to, amount)=> {
         try{
             let tx = await contract.mint(to, amount, []);

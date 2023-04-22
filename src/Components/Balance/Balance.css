@@ -17,3 +17,23 @@ img {
   button {
     margin-top: 10px;
   }
+
+  .tray {
+    vertical-align: top;
+
+  }
+
+  .descriptionBox {
+    width: 200px;
+    background-color: #9b5500;
+    border-radius: 12px;
+    vertical-align: top;
+  }
+
+  .titleBox {
+    width: 200px;
+    background-color: #cc7000;
+    border-radius: 8px;
+    vertical-align: top;
+
+  }

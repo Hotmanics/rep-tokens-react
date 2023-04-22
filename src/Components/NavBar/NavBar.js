@@ -30,9 +30,9 @@ const NavBar = (props)=> {
         <button onClick={()=> {handleClick('roleGrant')}}>
             Admin
         </button>
-
-        {/* <button onClick={()=> {handleClick('SXSW')}}>
-            SXSW
+{/* 
+        <button onClick={()=> {handleClick('SXSW')}}>
+            Burn For Beer - Consensys
         </button> */}
     </CenteredCard>
 }

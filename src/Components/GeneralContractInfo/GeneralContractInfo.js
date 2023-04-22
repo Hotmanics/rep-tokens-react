@@ -34,7 +34,8 @@ const GeneralContractInfo = (props)=> {
         console.log("got holders");
         const soulboundAssets = [];
             let soulboundOwners = await contract.getOwnersOfTokenID(0);
-
+            console.log(soulboundOwners);
+            
             for (let j = 0; j < soulboundOwners.length; j++) {
                 let amount = await contract.balanceOf(soulboundOwners[j], 0);
                 soulboundAssets.push({
@@ -81,6 +82,7 @@ const GeneralContractInfo = (props)=> {
 
 
     return <CenteredCard title="Contract Info">
+        <p>Contract Address: { address }</p>
         <p>Max Mint Amount Per Tx: {maxMintAmount}</p>
         <p>-------------------------------------------</p>
         <p>Soulbound Tokens</p>
