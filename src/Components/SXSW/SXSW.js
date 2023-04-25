@@ -4,75 +4,80 @@ import React, { useState } from 'react';
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
 import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
 import { oneOffAddress, OneOffDistributorABI } from "../OneOffDistributorInfo";
-import { GSNConfig, GsnEvent, RelayProvider, environments, validateRelayUrl } from '@opengsn/provider'
+import { RelayProvider } from '@opengsn/provider'
 
 const SXSW = (props)=> {
 
-    let tokenBurnAmount = 10;
+    let tokenBurnAmount = 1;
+    let tokenClaimAmount = 40;
 
-    const address = repTokenAddress;
-    const contract = new ethers.Contract(
-        address,
-        repTokensABI,
-        props.connectedWalletInfo.provider
-    );
+    // const repTokensContract = new ethers.Contract(
+    //     repTokenAddress,
+    //     repTokensABI,
+    //     props.connectedWalletInfo.provider
+    // );
 
-    const handleClaimClick = async ()=> {
-
+    const claimBeersGasless = async (contractAddress, contractABI, paymasterAddress) => {
         const gsnConfig = {
-            paymasterAddress: "0x47cC6a6F490dA8E2370db24CC63E18724FB5107A",
+            paymasterAddress: paymasterAddress,
           }
 
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          console.log(contractAddress);
+          console.log(paymasterAddress);
+
           const gsnProvider = RelayProvider.newProvider({ provider: window.ethereum, config: gsnConfig })
           await gsnProvider.init()
           const provider2 = new ethers.providers.Web3Provider(gsnProvider)
           const signer = provider2.getSigner()
-          const aContract = new ethers.Contract(address, repTokensABI, signer);
-          console.log(aContract);
-          props.onBoastMessage("Burning for beer!");
-
-          //       address from,
-        // address to,
-        // uint256 id,
-        // uint256 amount,
-        // bytes memory data
-          let tx = await aContract.safeTransferFrom(props.connectedWalletInfo.account, "0x4D6Ed22Ed0850384622EF129932aE29D27a89eD3", 1, tokenBurnAmount, []);
+          const aContract = new ethers.Contract(contractAddress, contractABI, signer);
+          props.onBoastMessage("Burning for beer...");
+          let tx = await aContract.safeTransferFrom(props.connectedWalletInfo.account, "0x38456fae75e2be6b071541942dd9c8750fF9Ebb2", 1, tokenBurnAmount, []);
           await tx.wait();
           props.onBoastMessage("Burned for beer!");
+    }
 
-          return;
+    const distributeOneOffTokensGasless = async (contractAddress, contractABI, paymasterAddress)=> {
 
-          console.log(provider);
+        console.log(contractAddress);
+        console.log(tokenClaimAmount);
 
+        const gsnConfig = {
+            paymasterAddress: paymasterAddress,
+          }
 
-          new ethers.providers.getDefaultProvider()
-        const myNewProvider = new ethers.providers.Web3Provider(props.connectedWalletInfo.provider);
-        // const gsnProvider = RelayProvider.newProvider({ provider: props.connectedWalletInfo.provider, config: gsnConfig })
-        return;
-        // await gsnProvider.init()
-        // const provider2 = new ethers.providers.Web3Provider(gsnProvider)
-        // const signer = provider2.getSigner()
-        // const aContract = new ethers.Contract(address, OneOffDistributorABI, signer);
-
-        // let tx = await aContract.redeem();
-        // await tx.wait();
-        // console.log("Redeemed!");
-        // return;
-
-        try{
-            let tx = await contract.redeem();
-            props.onBoastMessage("claiming tokens...");
+        const gsnProvider = RelayProvider.newProvider({ provider: window.ethereum, config: gsnConfig })
+        await gsnProvider.init()
+        const provider2 = new ethers.providers.Web3Provider(gsnProvider)
+        const signer = provider2.getSigner()
+        const aContract = new ethers.Contract(contractAddress, contractABI, signer);
+        try {
+            props.onBoastMessage("Claiming Tokens...");
+            let tx = await aContract.redeem(tokenClaimAmount);
             await tx.wait();
-            props.onBoastMessage("claimed tokens!");
-        } catch(e) {
-            console.log(e);
+            props.onBoastMessage("Claimed Tokens!");
+        } catch (e) {
             props.onBoastMessage(e.reason);
         }
     }
 
-    return <CenteredCard className="minting" title="Burn For Beer - Consensys"> 
-        <button onClick={handleClaimClick}>Burn {tokenBurnAmount} </button>
+    const distribute = async ()=> {
+        await distributeOneOffTokensGasless(oneOffAddress, OneOffDistributorABI, '0xba8021c8c6219eaac87883e062fB456f537089C5');
+    }
+
+    const claimbeer = async ()=> {
+        await claimBeersGasless(repTokenAddress, repTokensABI, '0xBA7D9bE288c3A36cC0d21ae1Ce2b341717994dc8');
+    }
+
+    return <CenteredCard className="minting" title="Consensys"> 
+    <div>
+        <p>Thank you for attending the ATX DAO's social mixer! Please click the button below to claim your Rep Tokens!</p>
+        <button onClick={distribute}>Claim {tokenClaimAmount} Token(s) </button>
+    </div>
+    <div>
+    <p>Thirsty? Redeem { tokenBurnAmount } token(s) and find Jacob Homanics to receive a free beer!</p>
+    <button onClick={claimbeer}>Burn {tokenBurnAmount} Redeemable Token(s) </button>
+
+    </div>
     </CenteredCard>
 }
 

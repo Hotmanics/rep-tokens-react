@@ -81,9 +81,18 @@ const RolesReader = (props)=> {
     }
 
 
-    return <CenteredCard className="rolesReader" title="Your Roles">
+    let output;
+    if (finalString.length > 0) {
+        output = <CenteredCard className="rolesReader" title="Your Roles">
         <p>{finalString}</p>
         </CenteredCard>
+    } else {
+        <div></div>
+    }
+
+    return <div>
+{output }
+    </div>
 }
 
 export default RolesReader;

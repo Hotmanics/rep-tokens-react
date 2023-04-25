@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CenteredCard from "../Cards/Centered Card/CenteredCard";
-
+import "./NavBar.css";
 const NavBar = (props)=> {
 
     const [state, setState] = useState('');
@@ -10,7 +10,7 @@ const NavBar = (props)=> {
         props.onStateSet(_state);
     }   
 
-    return <CenteredCard>
+    return <CenteredCard className="navBar">
         <button onClick={()=> {handleClick('contractInfo')}}>
             Contract Info
         </button>
@@ -30,10 +30,13 @@ const NavBar = (props)=> {
         <button onClick={()=> {handleClick('roleGrant')}}>
             Admin
         </button>
-{/* 
-        <button onClick={()=> {handleClick('SXSW')}}>
-            Burn For Beer - Consensys
-        </button> */}
+
+        <div>
+        <button id="consensys" onClick={()=> {handleClick('SXSW')}}>
+            SPECIAL - CONSENSYS
+        </button>
+
+        </div>
     </CenteredCard>
 }
 
