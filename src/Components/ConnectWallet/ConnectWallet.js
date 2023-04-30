@@ -1,8 +1,8 @@
+import React, { useState } from 'react';
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { ethers } from "ethers"
-import React, { useState } from 'react';
 import "./ConnectWallet.css";
 
 const providerOptions = {
@@ -50,7 +50,7 @@ const ConnectWallet = (props)=> {
         
             await etherProvider.send("eth_requestAccounts");
             const accounts = await etherProvider.listAccounts();
-          
+  
             const connectedWalletInfo = {
               account: accounts[0],
               provider: etherProvider.getSigner(),
@@ -64,18 +64,22 @@ const ConnectWallet = (props)=> {
 
     };
 
-    let buttonSection = connectedWalletInfo.account === undefined ? 
-                            <button type="button" onClick={connectWallet}>
-                                Login
-                            </button> :
-                            <div></div>;
+    let truncated;
+    let output;
 
-    const accountInfo = connectedWalletInfo.account === undefined ? <p>Please login.</p>
-                        : <p>You are logged in as: { connectedWalletInfo.account }</p>
+    if (connectedWalletInfo.account === undefined) {
+        output = <button type="button" onClick={connectWallet}>
+            Login 
+        </button>;
+    } else {
+      truncated = connectedWalletInfo.account.substring(0, 10) + "...";
+    }
+
+    let accountInfo = connectedWalletInfo.account === undefined ? <div></div>
+                        : <div id="holla">Logged in as: { truncated }</div>
+
     return <div className="connectWallet">
-      <p>Please ensure that you are connected to polygon mainnet!</p>
-      <br/>
-        { buttonSection } 
+        { output } 
         { accountInfo }
         </div>
 }

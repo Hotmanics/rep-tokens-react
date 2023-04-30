@@ -1,39 +1,64 @@
-img {
+.balance {
+  background-color: #333333;
+  border-radius: 12px;
+  
+  text-align: center;
+  margin:auto;
+  width: 100%;
+  min-width: 50px;
+  max-width: 700px; 
+  color:white;
+}
+
+.balance img {
     width:200px;
     height:200px;
 }
 
-.token {
+.balance .token {
     display:inline-block;
     margin:10px;
 }
 
-.Balance button {
+.balance button {
     justify-self:center;
     text-align: center; 
     white-space: pre-line;
+    margin-top: 10px;
   } 
 
-  button {
-    margin-top: 10px;
-  }
-
-  .tray {
+.balance  .tray {
     vertical-align: top;
-
   }
 
-  .descriptionBox {
+.balance .descriptionBox {
     width: 200px;
     background-color: #9b5500;
     border-radius: 12px;
     vertical-align: top;
   }
 
-  .titleBox {
+  .balance .titleBox {
     width: 200px;
     background-color: #cc7000;
     border-radius: 8px;
     vertical-align: top;
 
+  } 
+
+
+.balance button{
+  background-color: #f48847;
+  color:white;
+  width: 100%;
+  min-width: 50px;
+  max-width: 75px; 
+  font-size:24px;
+  border-radius:12px;
+  margin:2.5px;
+  }
+  .balance button:hover,
+  .balance button:active{
+    background-color: #894b24;
+    border-color: #000000;
   }

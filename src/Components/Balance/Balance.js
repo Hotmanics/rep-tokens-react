@@ -105,15 +105,17 @@ const Balance = (props)=> {
 
 
 
-    return <CenteredCard className="Balance" title="Account">
+    return <div className="balance" title="Account">
+        <h2>Account</h2>
         <div className="token tray">
+            <p>Balance</p>
             <p>{soulboundBalance}</p>
             <img src={soulboundImage}></img>
             <p className="titleBox">{soulboundName}</p>
             <p className="descriptionBox">{soulboundDescription}</p>
         </div>
         <div className="token tray">
-            
+            <p>Balance</p>
             <p>{redeemableBalance}</p>
             <img src={redeemableImage}></img>
             <p className="titleBox">{redeemableName}</p>
@@ -130,7 +132,7 @@ const Balance = (props)=> {
             <button onClick={setUserDestination}>Set</button>
             </div>
         </div>
-    </CenteredCard>
+    </div>
 }
 
 export default Balance;

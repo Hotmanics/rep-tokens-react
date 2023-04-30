@@ -1,12 +1,10 @@
 // import "./GeneralContractInfo.css";
 import { ethers } from "ethers"
 import React, { useState, useEffect } from "react";
-import CenteredCard from "../Cards/Centered Card/CenteredCard";
 import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
+import "./GeneralContractInfo.css";
 
 const GeneralContractInfo = (props)=> {
-
-
     useEffect(()=> {
         if (props.onContractPageSet) {
             test();
@@ -94,7 +92,7 @@ const GeneralContractInfo = (props)=> {
             <p>Number Of Holders: {assets.soulboundAssets.length}</p>
             {
                 assets.soulboundAssets.map((data, index) => (
-                    <p key={Math.random()}>{data.owner} owns {data.amount}</p>
+                    <p id="wrap" key={Math.random()}>{data.owner} owns {data.amount}</p>
                 ))
             }
         </div>
@@ -107,7 +105,7 @@ const GeneralContractInfo = (props)=> {
             <p>Number Of Holders: {assets.redeemableAssets.length}</p>
             {
                 assets.redeemableAssets.map((data, index) => (
-                    <p key={Math.random()}>{data.owner} owns {data.amount}</p>
+                    <p id="wrap" key={Math.random()}>{data.owner} owns {data.amount}</p>
                 ))
             }
         </div>
@@ -121,8 +119,9 @@ const GeneralContractInfo = (props)=> {
         </div>
     }
 
-    return <CenteredCard title="Contract Info">
-        <p>Contract Address: { address }</p>
+    return <div className="generalContractInfo" title="Contract Info">
+        <h2>Contract Info</h2>
+        <p id="wrap">Contract Address: { address }</p>
         { maxMint }
         <p>-------------------------------------------</p>
         {
@@ -133,7 +132,7 @@ const GeneralContractInfo = (props)=> {
             redeemable
         }
 
-        </CenteredCard>
+        </div>
 }
 
 export default GeneralContractInfo;

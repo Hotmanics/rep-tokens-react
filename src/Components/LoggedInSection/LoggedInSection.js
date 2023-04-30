@@ -8,8 +8,17 @@ import Minting from "../Minting/Minting";
 import Balance from "../Balance/Balance";
 import SXSW from "../SXSW/SXSW";
 import RolesReader from "../Role Readers/RolesReader";
+import { repTokenAddress, repTokensABI } from "../RepTokenInfo";
+import { ethers } from "ethers"
 
 const LoggedInSection = (props)=> {
+
+    const address = repTokenAddress;
+    const contract = new ethers.Contract(
+        address,
+        repTokensABI,
+        props.connectedWalletInfo.provider
+    );
 
     const handleLogger = (message)=> {
         props.onBoastMessage(message);
@@ -45,7 +54,7 @@ const LoggedInSection = (props)=> {
 
     return <div className="LoggedInSection">
         <RolesReader connectedWalletInfo={props.connectedWalletInfo}></RolesReader>
-    <NavBar onStateSet={handleStateSet}></NavBar>
+    <NavBar contract={contract} connectedWalletInfo={props.connectedWalletInfo} onStateSet={handleStateSet}></NavBar>
     { output }
     </div>
 }

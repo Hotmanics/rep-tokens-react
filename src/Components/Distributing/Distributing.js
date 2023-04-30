@@ -150,7 +150,7 @@ const Distributing = (props)=> {
         distributeBatch(dests, amount);
     }
 
-    const distributeBatch = async (addrs, amounts)=> {
+    const distributeBatch = async (addrs, amounts)=> {        
         try{
             let tx = await contract.distributeBatch(props.connectedWalletInfo.account, addrs, amounts, []);
             
@@ -213,9 +213,10 @@ const Distributing = (props)=> {
                 )
             })
         }
+
         <div><button onClick={addDestination}>+</button></div>
         <div><button onClick={distributeBatchForInputFields}>distribute batch</button></div>
-        <div><button onClick={distributeBatchForSXSW}>distribute batch (SXSW)</button></div>
+        {/* <div><button onClick={distributeBatchForSXSW}>distribute batch (SXSW)</button></div> */}
     </CenteredCard>
 }
 

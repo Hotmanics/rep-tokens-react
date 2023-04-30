@@ -37,9 +37,9 @@ function App() {
   {loginComponents}</div>;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        { output }
+    <div className="app">
+      <header>
+        {output}
       </header>
     </div>
   );

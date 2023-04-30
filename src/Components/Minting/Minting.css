@@ -1,3 +1,31 @@
+  .minting {
+    background-color: #333333;
+    border-radius: 12px;
+    text-align: center;
+    margin:auto;
+    width: 100%;
+    min-width: 50px;
+    max-width: 400px; 
+    color:white;
+  }
+
+  .minting button{
+    display: inline-block;
+    background-color: #f48847;
+    color:white;
+    width: 100%;
+    min-width: 50px;
+    max-width: 125px; 
+    font-size:16px;
+    border-radius:12px;
+    margin:2.5px;
+    }
+    .minting button:hover,
+    .minting button:active{
+      background-color: #894b24;
+      border-color: #000000;
+    }
+
   .minting p {
     font-size: 18px;
   }
@@ -8,7 +36,7 @@
     white-space: pre-line;
   } 
 
-  button {
+  .minting button {
     margin-top: 10px;
   }
 

@@ -1,3 +1,31 @@
+.distributing {
+  background-color: #333333;
+  border-radius: 12px;
+  text-align: center;
+  margin:auto;
+  width: 100%;
+  min-width: 50px;
+  max-width: 400px; 
+  color:white;
+}
+
+.distributing button{
+  display: inline-block;
+  background-color: #f48847;
+  color:white;
+  width: 100%;
+  min-width: 50px;
+  max-width: 125px; 
+  font-size:16px;
+  border-radius:12px;
+  margin:2.5px;
+  }
+  .distributing button:hover,
+  .distributing button:active{
+    background-color: #894b24;
+    border-color: #000000;
+  }
+
   .distributing p {
     font-size: 18px;
   }
@@ -8,7 +36,7 @@
     white-space: pre-line;
   } 
 
-  button {
+  .distributing button {
     margin-top: 10px;
   }
 
