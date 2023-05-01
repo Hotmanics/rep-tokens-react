@@ -4,11 +4,13 @@ import "./Components/Buttons/buttons.css";
 import ConnectWallet from "./Components/ConnectWallet/ConnectWallet";
 import Logger from "./Components/Logger/Logger";
 import LoggedInSection from "./Components/LoggedInSection/LoggedInSection";
+import Lost from "./Components/Lost/Lost";
+import AddNetwork from "./Components/AddNetwork/AddNetwork";
 
 function App() {
 
   useEffect(() => {
-    document.title = "ATX DAO Rep"
+    document.title = "Rep - ATX DAO"
     }, []);
 
 
@@ -31,10 +33,29 @@ function App() {
 
   const [loginComponents, setLoginComponents] = useState('');
 
+  let extra;
+  if (connectedWalletInfo === undefined) {
+    extra = <Lost></Lost>;
+  }
+
   let output = <div>
-  <ConnectWallet onBoastMessage={handleLogger} onWalletConnected={handleLogin}></ConnectWallet>
-  <Logger boastMessage={message} connectedWalletInfo={connectedWalletInfo}></Logger>
-  {loginComponents}</div>;
+  <div id="margined">
+    <ConnectWallet onWalletConnected={handleLogin}></ConnectWallet>
+  </div>
+  <div id="margined">
+    {extra}
+  </div>
+  <div id="margined">
+    <AddNetwork></AddNetwork>
+  </div>
+  {loginComponents}
+</div>
+
+
+  // let output = <div>
+  // <ConnectWallet onBoastMessage={handleLogger} onWalletConnected={handleLogin}></ConnectWallet>
+  // <Logger boastMessage={message} connectedWalletInfo={connectedWalletInfo}></Logger>
+  // {loginComponents}</div>;
 
   return (
     <div className="app">
