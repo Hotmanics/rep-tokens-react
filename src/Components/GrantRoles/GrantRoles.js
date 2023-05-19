@@ -40,7 +40,6 @@ const GrantRoles = (props)=> {
         console.log(selectedRole);
 
         if (selectedRole === 'minter') {
-            console.log("beh");
             await grantMinterRole();
         }
         if (selectedRole === 'distributor')
@@ -49,6 +48,9 @@ const GrantRoles = (props)=> {
             await grantBurnerRole();
         if (selectedRole === 'Soulbound Token Transferer')
             await grantSoulboundTokenTransfererRole();
+        if (selectedRole === 'admin') {
+            await grantAdminRole();
+        }
     }
 
     const grantBurnerRole = async ()=> {
@@ -65,6 +67,10 @@ const GrantRoles = (props)=> {
 
     const grantSoulboundTokenTransfererRole = async ()=> {
         await grantRole(await contract.TOKEN_MIGRATOR_ROLE());
+    }
+
+    const grantAdminRole = async ()=> {
+        await grantRole(await contract.DEFAULT_ADMIN_ROLE());
     }
 
     const mint = async (to, amount)=> {

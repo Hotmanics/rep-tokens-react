@@ -9,7 +9,9 @@ const providerOptions = {
     walletconnect: {
       package: WalletConnectProvider, // required
       options: {
-        infuraId: "https://mainnet.infura.io/v3/cadcede23805433d8a998682be5bc221", // required
+        chainId: 137,
+        infuraId: "", // required
+        rpc: ""
       },
     },
     coinbasewallet: {
